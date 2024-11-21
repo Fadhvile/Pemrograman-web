@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce</title>
+    <style>
+        .item-list, .cart {
+            margin-top: 20px;
+        }
+        .item, .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+        .item button, .cart-item button {
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .cart-item button {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Barang Tersedia</h2>
+<div class="item-list">
+    <div class="item">
+        <span>Baju</span>
+        <button onclick="addItem('Item 1')">Tambahkan</button>
+    </div>
+    <div class="item">
+        <span>Jaket</span>
+        <button onclick="addItem('Item 2')">Tambahkan</button>
+    </div>
+    <div class="item">
+        <span>Jeans</span>
+        <button onclick="addItem('Item 3')">Tambahkan</button>
+    </div>
+</div>
+
+<h2>Keranjang Anda</h2>
+<div class="cart" id="cart">
+    
+</div>
+
+<button onclick="checkout()">Checkout</button>
+
+<script>
+    let cart = [];
+
+
+    function addItem(item) {
+        
+        if (!cart.includes(item)) {
+            cart.push(item);
+            displayCart();
+        }
+    }
+
+    
+    function removeItem(item) {
+        const index = cart.indexOf(item);
+        if (index !== -1) {
+            cart.splice(index, 1);
+            displayCart();
+        }
+    }
+
+    
+    function displayCart() {
+        const cartDiv = document.getElementById('cart');
+        cartDiv.innerHTML = '';  
+
+        cart.forEach((item) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('cart-item');
+            itemDiv.innerHTML = `${item} <button onclick="removeItem('${item}')">Remove</button>`;
+            cartDiv.appendChild(itemDiv);
+        });
+    }
+
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert("Keranjang anda kosong");
+        } else {
+            alert(`Checkout dengan${cart.length} barang.`);
+            cart = [];  
+            displayCart();
+        }
+    }
+</script>
+
+</body>
+</html>
